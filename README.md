@@ -8,24 +8,24 @@ In the second notebook, I replaced the baseline encoder with a Swin Transformer 
 Below is the modified model architecture:
 
 ```
-Input Image  
-       │  
-┌───────────────┐  
-│  Transformer  │  
-└──────┬────────┘  
-       │  (features [0], [1], [2], [3])  
-       ▼  
-Decoder4 (upsample + add features[2])  
-       ▼  
-Decoder3 (upsample + add features[1])  
-       ▼  
-Decoder2 (upsample + add features[0])  
-       ▼  
-Decoder1  
-       ▼  
-Segmentation Head (Conv2d 1x1)  
-       ▼  
-Segmentation Mask (Output)  
+Input Image
+       │
+┌───────────────┐
+│  Transformer  │
+└──────┬────────┘
+       │   (features [0], [1], [2], [3])
+       ▼
+Decoder4 (features[3])
+       ▼
+Decoder3 (upsample d4 + features[2])
+       ▼
+Decoder2 (upsample d3 + features[1])
+       ▼
+Decoder1 (upsample d2 + features[0])
+       ▼
+Segmentation Head (Conv2d 1x1)
+       ▼
+Segmentation Mask (Output)
 ```
 
 The goal is to evaluate whether attention-based feature encoding improves segmentation performance on sparse, outline-based masks.
